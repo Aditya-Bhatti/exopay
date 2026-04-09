@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exopay - Payment Gateway for Online & Offline Payments</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Hide hamburger menu by default (for desktop) */
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #0a1128;
+        }
+
+        /* Default nav-content wrapper for flex layout */
+        .nav-content {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            /* Header row layout */
+            .nav-container {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: center !important;
+                position: relative;
+                padding: 15px 20px !important;
+            }
+
+            /* Show Hamburger icon */
+            .menu-toggle {
+                display: block;
+            }
+
+            /* Hide default navigation links and actions */
+            .nav-content {
+                display: none; /* Hidden by default in mobile */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: #ffffff;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+                padding: 20px;
+                z-index: 1000;
+                border-top: 1px solid #f0f0f0;
+            }
+
+            /* Class to toggle visibility via JavaScript */
+            .nav-content.active {
+                display: flex;
+            }
+
+            /* Fix navigation links for mobile dropdown */
+            .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 25px;
+                width: 100%;
+                padding: 0;
+            }
+
+            .nav-links li {
+                width: 100%;
+                list-style: none;
+                border-bottom: 1px solid #f8f9fa;
+                padding-bottom: 10px;
+            }
+
+            .nav-links a {
+                display: block;
+                width: 100%;
+            }
+
+            /* Premium, smaller buttons layout */
+            .nav-actions {
+                display: flex !important;
+                flex-direction: row !important;
+                gap: 10px;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-actions .btn {
+                flex: 1;
+                padding: 10px !important; /* Smaller, elegant padding */
+                font-size: 13px !important; /* Smaller font */
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Exopay Logo" style="height: 40px;">
+            </a>
+            
+            <div class="menu-toggle" id="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="nav-content" id="nav-content">
+                <nav>
+                    <ul class="nav-links">
+                        <li class="nav-dropdown" id="products-dropdown">
+                            <a href="#" class="active no-nav" id="products-toggle">Products <i class="fa-solid fa-chevron-down"></i></a>
+                            <div class="mega-dropdown products-menu">
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-regular fa-credit-card"></i></div>
+                                    <div>
+                                        <h4>Online Payment Gateway</h4>
+                                        <p>Collect hassle free and secure online payments</p>
+                                    </div>
+                                </div>
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-regular fa-rectangle-list"></i></div>
+                                    <div>
+                                        <h4>Payment Forms</h4>
+                                        <p>Easy data collection and payment form builder</p>
+                                    </div>
+                                </div>
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-regular fa-calendar-check"></i></div>
+                                    <div>
+                                        <h4>eNACH</h4>
+                                        <p>Collect recurring payments with ease</p>
+                                    </div>
+                                </div>
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-solid fa-sitemap"></i></div>
+                                    <div>
+                                        <h4>Payment Pages</h4>
+                                        <p>Build your own online payment page</p>
+                                    </div>
+                                </div>
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-regular fa-handshake"></i></div>
+                                    <div>
+                                        <h4>Offline Payments</h4>
+                                        <p>World's first offline payments collection platform</p>
+                                    </div>
+                                </div>
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-solid fa-link"></i></div>
+                                    <div>
+                                        <h4>Payment Links</h4>
+                                        <p>Collect easy payments through payment links</p>
+                                    </div>
+                                </div>
+                                <div class="mega-item">
+                                    <div class="mega-icon"><i class="fa-regular fa-square-plus"></i></div>
+                                    <div>
+                                        <h4>Payment Buttons</h4>
+                                        <p>Embed online payment buttons on your website</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#partners">Partners</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li class="nav-dropdown" id="developer-dropdown">
+                            <a href="#" class="no-nav" id="developer-toggle">Developer <i class="fa-solid fa-chevron-down"></i></a>
+                            <div class="mega-dropdown developer-menu">
+                                <div class="developer-item">Integration Kits</div>
+                                <div class="developer-item">UAT Checklist</div>
+                            </div>
+                        </li>
+                        <li><a href="contact.html#support">Support</a></li>
+                    </ul>
+                </nav>
+                <div class="nav-actions">
+                    <a href="#" class="btn btn-outline">Login <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#" class="btn btn-primary">Sign Up <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-badge">PAYMENTS SIMPLIFIED</div>
+            <h1>The Payment Gateway Built for Online & Offline Payments</h1>
+            <p>A secure, fully compliant payment gateway supporting online and offline payments with one of the widest payment mode coverages.</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary">Sign Up Now <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="hero-partners" id="partners">
+                <div class="hero-partners-grid">
+                    <div class="partner-chip">YES BANK</div>
+                    <div class="partner-chip">Bank of Baroda</div>
+                    <div class="partner-chip">Bank of India</div>
+                    <div class="partner-chip">Central Bank of India</div>
+                    <div class="partner-chip">Indian Bank</div>
+                    <div class="partner-chip">Kotak Mahindra Bank</div>
+                </div>
+                <p class="hero-partners-title">Premium Bank Partners</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" id="pricing">
+        <div class="about-intro">
+            <p>Exo Pay, the World's First Hybrid Payments Platform, brings online and offline payment collections together in one secure ecosystem. As an RBI-authorised, PCI-DSS & ISO-certified payment gateway provider in India, we enable secure, reliable transactions for businesses, institutions, and government organisations across the country.</p>
+        </div>
+
+        <div class="section-title" style="margin-top: 55px;">
+            <h2>Product Suite</h2>
+            <p>Payment solutions for all your business needs!</p>
+        </div>
+
+        <div class="product-suite-grid">
+            <div class="product-suite-card">
+                <div class="card-icon"><i class="fa-solid fa-wallet"></i></div>
+                <h3>Online Payment Gateway</h3>
+                <p>Accept online payments through UPI, Cards, Net Banking, Wallets, Bharat QR, and more. All within a secure, RBI-authorised payment gateway built for Indian businesses.</p>
+                <a href="#" class="learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="product-suite-card">
+                <div class="card-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <h3>B2B e-collect</h3>
+                <p>A secure B2B collection system powered by Virtual Account Numbers (VANs) for validated payments from partners, dealers, and agents.</p>
+                <a href="#" class="learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="product-suite-card">
+                <div class="card-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                <h3>eNACH</h3>
+                <p>Automate recurring collections with e-mandates for faster settlements, reduced manual effort, and smoother cash flow management.</p>
+                <a href="#" class="learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="product-suite-grid" style="margin-top: 24px;">
+            <div class="product-suite-card">
+                <div class="card-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h3>Payment Forms</h3>
+                <p>From applications and registrations to bookings and orders, create digital payment forms that reduce drop-offs by keeping data collection and payment in a single, seamless flow.</p>
+                <a href="#" class="learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="product-suite-card">
+                <div class="card-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <h3>Offline Payments</h3>
+                <p>Enable cash, cheque, and bank-transfer collections through 1.4M+ authorised cash counters across India powered by SabPaisa's hybrid payments network.</p>
+                <a href="#" class="learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+
+            <div class="product-suite-card">
+                <div class="card-icon"><i class="fa-solid fa-link"></i></div>
+                <h3>Payment Links</h3>
+                <p>Create payment links and share them instantly to accept payments online without needing a website or app.</p>
+                <a href="#" class="learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="section-title" style="margin-top: 72px; margin-bottom: 40px;">
+            <h2>What Sets Exo Pay Apart as a Leading Payment Gateway in India</h2>
+            <p style="max-width: 900px; margin: 24px auto 0;">Exo Pay combines regulated payment infrastructure with AI-native development practices—enabling secure, reliable payment solutions with faster innovation cycles.</p>
+        </div>
+
+        <div class="features-list">
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-list-check"></i></div>
+                <div class="feature-content">
+                    <h4>Hybrid Payments Built for India:</h4>
+                    <p>Support for online payments and physical branch/counter deposits through 1.4M+ cash counters, consolidated on one platform.</p>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <div class="feature-content">
+                    <h4>RBI-Authorised. Bank-Backed. Audit-Ready:</h4>
+                    <p>Exo Pay is an RBI-authorised payment aggregator, PCI-DSS & ISO certified, and white-labelled for major public and private sector banks across India.</p>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                <div class="feature-content">
+                    <h4>AI-Native Product Velocity:</h4>
+                    <p>Exo Pay's AI-native development approach enables rapid, production-grade builds across payments, settlements, compliance systems, dashboards and reconciliation workflows—demonstrated through the development of 14 enterprise-grade products by a lean team under accelerated timelines.</p>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                <div class="feature-content">
+                    <h4>Designed for Real-World Indian Collections:</h4>
+                    <p>UPI, cards, net banking, wallets, Bharat QR, NACH and offline cash/cheque deposits—supported with automated reconciliation and consolidated reporting.</p>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <div class="feature-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="feature-content">
+                    <h4>Enterprise-Grade Controls & Visibility:</h4>
+                    <p>Predictable settlements, real-time dashboards, audit trails and reconciliation workflows designed for institutions, enterprises and government organisations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="learn-more-section">
+            <p>Learn how Exo Pay builds AI-native payment infrastructure <a href="#" class="learn-more-link">Learn more here <i class="fa-solid fa-arrow-right"></i></a></p>
+        </div>
+    </section>
+
+    <section class="container" style="padding: 80px 0;">
+        <div class="end-to-end-wrapper">
+            <div class="end-to-end-image">
+                <img src="images/Get Payment Link.webp" alt="Payment Gateway Solution">
+            </div>
+            <div class="end-to-end-content">
+                <h2>An end-to-end Payment Gateway Solution</h2>
+                <p>Exo Pay enables online payments, offline collections, and automated reconciliation through one secure platform.</p>
+                
+                <div class="solution-items">
+                    <div class="solution-item">
+                        <div class="solution-icon"><i class="fa-solid fa-shield"></i></div>
+                        <span>RBI-authorised payment aggregator</span>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon"><i class="fa-solid fa-building-columns"></i></div>
+                        <span>White-labelled for leading public and private sector banks</span>
+                    </div>
+                    <div class="solution-item">
+                        <div class="solution-icon"><i class="fa-solid fa-building"></i></div>
+                        <span>More than 1.4 Million Cash Counters for Offline Payments.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container" style="padding: 80px 0;">
+        <div class="trusted-wrapper">
+            <div class="trusted-content">
+                <h2>Trusted by Enterprises, Institutions & Government Organisations Across India</h2>
+                <p>Exo Pay is a secure and inclusive payments platform trusted by large enterprises, banks, and government organisations.</p>
+                
+                <div class="trusted-items">
+                    <div class="trusted-item">
+                        <div class="trusted-icon"><i class="fa-solid fa-globe"></i></div>
+                        <span>Seamless Payment Gateway Services</span>
+                    </div>
+                    <div class="trusted-item">
+                        <div class="trusted-icon"><i class="fa-solid fa-map"></i></div>
+                        <span>Serving Pan India</span>
+                    </div>
+                    <div class="trusted-item">
+                        <div class="trusted-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                        <span>Payment solutions tailored to your Business</span>
+                    </div>
+                </div>
+            </div>
+            <div class="trusted-image">
+                <img src="images/Trusted Partner.webp" alt="Trusted Partners">
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light" style="padding: 80px 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2 style="color: var(--primary);">What Our Customers are Saying?</h2>
+            </div>
+
+            <div class="testimonials-carousel">
+                <button class="carousel-btn carousel-btn-prev" id="prev-btn"><i class="fa-solid fa-chevron-left"></i></button>
+
+                <div class="testimonials-wrapper">
+                    <div class="testimonial-slide active">
+                        <div class="testimonial-content">
+                            <p>We were able to conduct scrutiny, recruitment, registration & examination fees collections for around 28-32 lakhs students/applicants each year smoothly and reconciled our accounts with such speed and efficiency as experienced never before. We have been proudly associated with SabPaisa Payment Gateway continuously since last 3 years & are keen to continue our partnership in the future too.</p>
+                            <div class="testimonial-meta">
+                                <h4>Bihar School Examination Board</h4>
+                                <p>System Analyst</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-image">
+                            <img src="images/bihar-school.webp" alt="Bihar School Examination Board">
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-content">
+                            <p>We don't have any hesitation to say that your services never fall short of our expectation and I really loved the client support. Thank You and continue the good work that you and your company is doing. JIADA and our entrepreneurs are happy with the NEFT system.</p>
+                            <div class="testimonial-meta">
+                                <h4>Jharkhand Industrial Area Development Authority</h4>
+                                <p>Admin (IT & Operation)</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-image">
+                            <img src="images/Jharkhand-Industrial-Area.webp" alt="Jharkhand Industrial Area Development Authority">
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-content">
+                            <p>हम सबसेसा द्वारा विगत 10 माह से दी जा रही Payment Gateway की सुविधा की गुणवत्ता से एवं उनके द्वारा दिखाई गई तत्परता से संतुष्ट हैं। उनके द्वारा दी गई Online & Offline Payment सुविधा हमारे उपभोक्ताओं के लिए काफी उपयोगी रहा है एवं CGECB, Chhattisgarh के लिए भी काफी सुविधाजनक रही है। उनके End to End Platform ने हमारी सभी जरूरतों का ख्याल रखा है तथा उनकी Dashboard Report System से भी हमें काफी मदद मिलती है, जिसकी हम सराहना करते हैं।</p>
+                            <div class="testimonial-meta">
+                                <h4>Chhattisgarh Environment</h4>
+                                <p>Conservation Board</p>
+                            </div>
+                        </div>
+                        <div class="testimonial-image">
+                            <img src="images/Chhattisgarh.webp" alt="Chhattisgarh Environment Conservation Board">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn carousel-btn-next" id="next-btn"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+
+            <div class="carousel-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="latest-products-section">
+        <div class="container">
+            <div class="latest-products-head">
+                <h2>Latest Payment Products from Exo Pay</h2>
+                <p>Check out our recent Products that cater to a variety of Payment Collection and Payout requirements.</p>
+            </div>
+
+            <div class="latest-products-grid">
+                <div class="latest-product-item">
+                    <div class="latest-product-icon"><i class="fa-solid fa-link"></i></div>
+                    <h3>Payment Links</h3>
+                    <p>Generate Payment Links for all types of businesses in one click, and share Secured Payment Links with real-time transaction updates.</p>
+                    <a href="#" class="latest-learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <div class="latest-product-item">
+                    <div class="latest-product-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                    <h3>Payment Pages</h3>
+                    <p>Create hosted, customisable payment pages for ecommerce sales, services, subscriptions, and donations. Publish in minutes, share anywhere, and start collecting payments without developers.</p>
+                    <a href="#" class="latest-learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+
+                <div class="latest-product-item">
+                    <div class="latest-product-icon"><i class="fa-solid fa-rotate"></i></div>
+                    <h3>B2B e-collect</h3>
+                    <p>India's first B2B collection solution that enables businesses to collect payments from their partners/dealers/agents through a Virtual Account Number (VAN) with prior validation.</p>
+                    <a href="#" class="latest-learn-more">LEARN MORE <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container powerful-section">
+        <div class="powerful-grid">
+            <div class="powerful-image-wrap">
+                <img src="images/Powerful.webp" alt="Powerful Integration">
+            </div>
+
+            <div class="powerful-content">
+                <h2>Powerful Integrated Payments for Any Business Model</h2>
+                <p>A single integration and extensive documentation mean faster market time, less legacy system maintenance, and more focus on customer and product experiences.</p>
+                <ul>
+                    <li>Onboard merchants quickly with online KYC and guided setup</li>
+                    <li>Manage onboarding, transactions and reporting through Merchant Center</li>
+                    <li>Access analytics, reconciliation and support tools in Partner Center</li>
+                    <li>Reduce overhead with built-in compliance, fraud coverage and PCI adherence</li>
+                    <li>Improve cash flow with flexible payouts and same-day settlement options</li>
+                </ul>
+                <a href="#" class="btn btn-primary powerful-cta">GETTING STARTED <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="business-section">
+        <div class="container business-head">
+            <h2>Payment Gateway Solution for All Businesses</h2>
+            <p>Exo Pay provides a vast range of products and capabilities, and a high level of competence to all kinds of Businesses.</p>
+        </div>
+
+        <div class="business-grid">
+            <div class="business-item">
+                <div class="business-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                <h3>E-Commerce</h3>
+                <p class="business-detail">With Exo Pay Payment Gateway for online marketplaces, experience faster, secured and smoother transactions, and an easy-to-manage dashboard with advanced payment management tools. By choosing us, you give your customers various payment options to make payments from.</p>
+            </div>
+
+            <div class="business-item">
+                <div class="business-icon"><i class="fa-solid fa-mobile-screen-button"></i></div>
+                <h3>Apps</h3>
+                <p class="business-detail">Payment Gateway for Apps: Simpler the checkout, the higher the conversion. Exo Pay Payment Gateway is built to address your customers' comfort and security with your app. With maximum payment modes for offline and online and a well-designed payment UI/UX, you can give the best transaction experience to your customers.</p>
+            </div>
+
+            <div class="business-item">
+                <div class="business-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <h3>Education Sector</h3>
+                <p class="business-detail">Payment Gateway for Education: Exo Pay Payment Gateway for education is designed to meet the needs of large transactions of an academic organisation (School/College/University/Academy). From fee collection to reconciliation of statements, we've got you covered. For maximum security, our Payment Gateway is built on an A-grade security feature for maximum confidentiality.</p>
+            </div>
+
+            <div class="business-item">
+                <div class="business-icon"><i class="fa-solid fa-store"></i></div>
+                <h3>Retail</h3>
+                <p class="business-detail">Payment Gateway for Retail: We provide payment solutions for businesses, whether convenience stores, grocery stores, clothing stores, auto retailers, home furnishing retailers, drug stores, or department stores. Exo Pay Payment Gateway supports maximum payment modes like debit cards, credit cards, wallets, UPI, and cash.</p>
+            </div>
+
+            <div class="business-item">
+                <div class="business-icon"><i class="fa-solid fa-id-card"></i></div>
+                <h3>PSU</h3>
+                <p class="business-detail">Payment Gateway for PSU: Exo Pay Payment Gateway for government organisations for payment collection. A few of our PSU clients include Bihar Housing Board, Delhi Jal Board, PCI etc. We provide the highest number of effective payment modes in a single checkout page, from UPI to Cards to Netbanking to e-NEFT/Cash.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="one-platform-section">
+        <div class="container">
+            <div class="one-platform-head">
+                <h2>One Platform to Accept Payments, Protect Revenue and Control Finances.</h2>
+                <p>We are committed to creating features that enable seamless and convenient online and offline payments and a great customer experience. As one of India's leading payment gateway service providers, we offer a comprehensive suite of digital payment solutions.</p>
+            </div>
+
+            <div class="one-platform-body">
+                <div class="one-platform-cards">
+                    <div class="one-platform-card">
+                        <div class="one-platform-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div>
+                            <h3>Maximum Online & Offline Modes</h3>
+                            <p>A single payment gateway for safe online and offline transactions. We support various payment methods, including credit/debit cards, UPI, wallets, and net banking.</p>
+                        </div>
+                    </div>
+
+                    <div class="one-platform-card">
+                        <div class="one-platform-icon"><i class="fa-solid fa-chart-line"></i></div>
+                        <div>
+                            <h3>One of the Highest Success Rates</h3>
+                            <p>One of the highest transaction success rates, with an auto population of details, reconciliation, and auto-retry.</p>
+                        </div>
+                    </div>
+
+                    <div class="one-platform-card">
+                        <div class="one-platform-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div>
+                            <h3>Robust Security</h3>
+                            <p>Your security is our top priority. We provide supreme security with PCI DSS Compliance, SSL Security, Visa Verification, and AWS-driven infrastructure for secure transactions.</p>
+                        </div>
+                    </div>
+
+                    <div class="one-platform-card">
+                        <div class="one-platform-icon"><i class="fa-solid fa-table-columns"></i></div>
+                        <div>
+                            <h3>All-In-One Business Dashboard</h3>
+                            <p>Manage all your payment needs from a single, advanced, yet user-friendly dashboard. With real-time updates, streamline 100% of your online and offline collections.</p>
+                        </div>
+                    </div>
+
+                    <div class="one-platform-card">
+                        <div class="one-platform-icon"><i class="fa-solid fa-gears"></i></div>
+                        <div>
+                            <h3>Easy Integration</h3>
+                            <p>Integrate Exo Pay seamlessly into your website, mobile app, or POS system. Source code, SDK, and sample code for various languages and platforms facilitate quick and easy integrations.</p>
+                        </div>
+                    </div>
+
+                    <div class="one-platform-card">
+                        <div class="one-platform-icon"><i class="fa-solid fa-headset"></i></div>
+                        <div>
+                            <h3>Top-Notch Customer Support</h3>
+                            <p>Get your questions answered quickly through chat, email, or phone with our dedicated customer support team.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="one-platform-visual">
+                    <div class="one-platform-circle"></div>
+                    <img src="images/Features.webp" alt="One Platform Illustration">
+                    <span class="visual-badge badge-one"><i class="fa-solid fa-building-columns"></i></span>
+                    <span class="visual-badge badge-two"><i class="fa-solid fa-qrcode"></i></span>
+                    <span class="visual-badge badge-three"><i class="fa-solid fa-credit-card"></i></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq-section" id="faqs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently asked questions</h2>
+                <p>Have any question? we are here to help</p>
+            </div>
+
+            <div class="faq-container">
+                <div class="faq-item active">
+                    <div class="faq-question">
+                        <span>What is a Payment Gateway?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A payment gateway securely processes online transactions by encrypting sensitive details and routing them between merchants, banks and payment networks.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Which payment gateway is best for my business in India?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The best payment gateway depends on your business model, payment mode coverage, compliance needs and integration requirements. Exo Pay is a regulated payment gateway provider in India offering secure online and offline collections.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What payment options does Exo Pay support?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>UPI, cards, net banking, wallets, Bharat QR, NACH and offline cash/cheque deposits through authorised counters.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does Exo Pay support settlements?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Settlements are processed as per RBI guidelines, with predictable settlement cycles based on your payment mode usage.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I accept payments without a website?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. You can create and share secure online payment links to collect payments without needing a website or app.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How secure is Exo Pay's payment gateway?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Exo Pay uses encrypted processing, fraud monitoring and robust infrastructure, and is RBI-authorised, PCI-DSS and ISO certified.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I integrate Exo Pay into my website or app?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Developers can integrate using APIs, SDKs and plug-ins—supported by detailed documentation and onboarding assistance.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Does Exo Pay provide offline payment collection?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes. Exo Pay enables hybrid online + offline collections through 1.4M+ authorised cash counters across India.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How does Exo Pay support businesses across India?</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Exo Pay serves enterprises, SMEs and institutions across India through unified dashboards, compliance support and multi-mode collections.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-container">
+            <div>
+                <a href="index.html" class="footer-logo">
+                    <img src="logo.png" alt="Exopay Logo">
+                </a>
+                <p class="footer-intro">ExoPay is a trusted payment gateway aggregator in India, built for secure and seamless online and offline collections for businesses of all sizes.</p>
+                <div class="footer-certs">
+                    <img src="images/RBI-Logo-copy.png" alt="RBI Logo">
+                    <img src="images/ISO1-copy.png" alt="ISO1 Certification Logo">
+                </div>
+            </div>
+
+            <div class="footer-links footer-stack">
+                <h4>Products</h4>
+                <ul>
+                    <li><a href="index.html" class="footer-link-text">Online Payment Gateway</a></li>
+                    <li><a href="index.html" class="footer-link-text">Payment Forms</a></li>
+                    <li><a href="index.html" class="footer-link-text">eNACH</a></li>
+                    <li><a href="index.html" class="footer-link-text">Payment Pages</a></li>
+                    <li><a href="index.html" class="footer-link-text">Offline Payments</a></li>
+                    <li><a href="index.html" class="footer-link-text">Payment Links</a></li>
+                    <li><a href="index.html" class="footer-link-text">Payment Buttons</a></li>
+                </ul>
+                <h4 class="footer-subhead">Resources</h4>
+                <ul>
+                    <li><span class="footer-link-text">Blog</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-links footer-stack">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="index.html" class="footer-link-text">About Us</a></li>
+                    <li><a href="contact.html#support" class="footer-link-text">Contact us</a></li>
+                    <li><span class="footer-link-text">Innovation</span></li>
+                    <li><span class="footer-link-text">Careers</span></li>
+                    <li><span class="footer-link-text">Media and Press</span></li>
+                    <li><span class="footer-link-text">Pricing</span></li>
+                </ul>
+                <h4 class="footer-subhead">Solutions</h4>
+                <ul>
+                    <li><span class="footer-link-text">Ecommerce</span></li>
+                    <li><span class="footer-link-text">Education</span></li>
+                    <li><span class="footer-link-text">Insurance &amp; NBFC</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-links footer-stack">
+                <h4>Developer</h4>
+                <ul>
+                    <li><span class="footer-link-text">Integration Kits</span></li>
+                    <li><span class="footer-link-text">UAT Checklist</span></li>
+                </ul>
+                <h4 class="footer-subhead">Legal</h4>
+                <ul>
+                    <li><span class="footer-link-text">Disclaimer</span></li>
+                    <li><span class="footer-link-text">Privacy Policy</span></li>
+                    <li><span class="footer-link-text">Merchant Onboarding Policy</span></li>
+                    <li><span class="footer-link-text">Grievance Redressal</span></li>
+                    <li><span class="footer-link-text">Terms &amp; Conditions</span></li>
+                    <li><span class="footer-link-text">Service Agreement</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-links footer-stack">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#faqs" class="footer-link-text">FAQs</a></li>
+                    <li><span class="footer-link-text">Raise a Ticket</span></li>
+                </ul>
+                <h4 class="footer-subhead">Find us online</h4>
+                <div class="footer-social">
+                    <!-- <span class="social-icon"><i class="fa-brands fa-x-twitter"></i></span> -->
+                    <span class="social-icon"><i class="fa-brands fa-instagram"></i></span>
+                    <span class="social-icon"><i class="fa-brands fa-facebook-f"></i></span>
+                    <span class="social-icon"><i class="fa-brands fa-linkedin-in"></i></span>
+                    <span class="social-icon"><i class="fa-brands fa-youtube"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Exopay. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle Logic for Mobile
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuBtn = document.getElementById("mobile-menu-btn");
+            const navContent = document.getElementById("nav-content");
+            const menuIcon = menuBtn ? menuBtn.querySelector("i") : null;
+            const productsToggle = document.getElementById("products-toggle");
+            const developerToggle = document.getElementById("developer-toggle");
+            const productsDropdown = document.getElementById("products-dropdown");
+            const developerDropdown = document.getElementById("developer-dropdown");
+
+            if(menuBtn && navContent) {
+                menuBtn.addEventListener("click", function() {
+                    navContent.classList.toggle("active");
+                    
+                    if (navContent.classList.contains("active")) {
+                        menuIcon.classList.remove("fa-bars");
+                        menuIcon.classList.add("fa-xmark");
+                    } else {
+                        menuIcon.classList.remove("fa-xmark");
+                        menuIcon.classList.add("fa-bars");
+                    }
+                });
+            }
+
+            if (productsToggle && developerToggle && productsDropdown && developerDropdown) {
+                const nonNavLinks = document.querySelectorAll(".no-nav");
+                nonNavLinks.forEach(function(link) {
+                    link.addEventListener("click", function(event) {
+                        event.preventDefault();
+                    });
+                });
+
+                productsToggle.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    productsDropdown.classList.toggle("open");
+                    developerDropdown.classList.remove("open");
+                });
+
+                developerToggle.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    developerDropdown.classList.toggle("open");
+                    productsDropdown.classList.remove("open");
+                });
+
+                document.addEventListener("click", function(event) {
+                    const clickedInsideProducts = productsDropdown.contains(event.target);
+                    const clickedInsideDeveloper = developerDropdown.contains(event.target);
+
+                    if (!clickedInsideProducts) {
+                        productsDropdown.classList.remove("open");
+                    }
+                    if (!clickedInsideDeveloper) {
+                        developerDropdown.classList.remove("open");
+                    }
+                });
+            }
+
+            // Carousel functionality
+            const prevBtn = document.getElementById("prev-btn");
+            const nextBtn = document.getElementById("next-btn");
+            const slides = document.querySelectorAll(".testimonial-slide");
+            const dots = document.querySelectorAll(".dot");
+            let currentSlide = 0;
+
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove("active"));
+                dots.forEach(dot => dot.classList.remove("active"));
+                slides[index].classList.add("active");
+                dots[index].classList.add("active");
+                currentSlide = index;
+            }
+
+            if (prevBtn && nextBtn) {
+                prevBtn.addEventListener("click", function() {
+                    let newIndex = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(newIndex);
+                });
+
+                nextBtn.addEventListener("click", function() {
+                    let newIndex = (currentSlide + 1) % slides.length;
+                    showSlide(newIndex);
+                });
+
+                dots.forEach(dot => {
+                    dot.addEventListener("click", function() {
+                        showSlide(parseInt(this.getAttribute("data-index")));
+                    });
+                });
+            }
+
+            // FAQ Accordion Toggle
+            const faqItems = document.querySelectorAll(".faq-item");
+            faqItems.forEach(item => {
+                const question = item.querySelector(".faq-question");
+                question.addEventListener("click", function() {
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove("active");
+                        }
+                    });
+                    item.classList.toggle("active");
+                });
+            });
+
+            // Auto-expand first FAQ item
+            if (faqItems.length > 0) {
+                faqItems[0].classList.add("active");
+            }
+        });
+    </script>
+</body>
+</html>

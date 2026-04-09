@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Exopay</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    </head>
+<body>
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Exopay Logo" style="height: 40px;">
+            </a>
+
+            <div class="menu-toggle" id="mobile-menu-btn">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+
+            <div class="nav-content" id="nav-content">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="services.html" class="active">Services</a></li>
+                        <li><a href="contact.html#support">Support</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section style="background: var(--bg-light); padding: 80px 0;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Complete Service Suite</h2>
+                <p>Transforming Finance with Friction-Free APIs and robust offline solutions.</p>
+            </div>
+            <div class="grid" style="margin-bottom: 60px;">
+                <div class="card">
+                    <div class="card-icon"><i class="fa-brands fa-google-pay"></i></div>
+                    <h3>UPI Integration</h3>
+                    <p>Connect PayIn, Payout, and dynamic UPI QR flows with our robust infrastructure. High success rates guaranteed.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-calculator"></i></div>
+                    <h3>POS Machines</h3>
+                    <p>Modern banking capabilities designed for physical touchpoints, storefronts, and retail chains.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-regular fa-credit-card"></i></div>
+                    <h3>Cards (Credit & Forex)</h3>
+                    <p>Customized card payment workflows to match your business needs for domestic and international clients.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+                    <h3>Virtual Accounts</h3>
+                    <p>Create unique virtual accounts for your dealers/agents to track B2B payments instantly.</p>
+                </div>
+            </div>
+
+            <div class="section-title" style="margin-top: 80px;">
+                <h2>Built on Scalable Infrastructure</h2>
+                <p>Manage your money with seamless online banking solutions tailored to your business.</p>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-server"></i></div>
+                    <h3>Scalable Infrastructure</h3>
+                    <p>Handle millions of transactions effortlessly with cloud-native architecture designed for high availability and instant scalability.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h3>Secure Transactions</h3>
+                    <p>Our infrastructure is built with end-to-end encryption, fraud detection, and full PCI-DSS compliance for complete safety.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
+                    <h3>Built-In Compliance</h3>
+                    <p>Automated Payouts with Built-In Compliance, Audit Trails & Transaction Logs. Fast and reliable real-time settlements.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 30px 0 20px;">
+        <div class="container footer-bottom" style="border-top: none;">
+            <p>&copy; 2026 Exopay. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const menuBtn = document.getElementById("mobile-menu-btn");
+            const navContent = document.getElementById("nav-content");
+            const menuIcon = menuBtn ? menuBtn.querySelector("i") : null;
+
+            if(menuBtn && navContent) {
+                menuBtn.addEventListener("click", function() {
+                    navContent.classList.toggle("active");
+                    
+                    if (navContent.classList.contains("active")) {
+                        menuIcon.classList.remove("fa-bars");
+                        menuIcon.classList.add("fa-xmark");
+                    } else {
+                        menuIcon.classList.remove("fa-xmark");
+                        menuIcon.classList.add("fa-bars");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
