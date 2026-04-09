@@ -151,8 +151,19 @@ a {
     background: linear-gradient(135deg, #0a1429 0%, #112240 100%);
     color: var(--white);
     padding: 120px 0 100px;
-    text-align: center;
+    text-align: left;
     position: relative;
+}
+
+.hero-main {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 28px;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 720px;
 }
 
 .hero-badge {
@@ -177,42 +188,55 @@ a {
 .hero p {
     font-size: 1.15rem;
     max-width: 700px;
-    margin: 0 auto 40px;
+    margin: 0 0 40px;
     color: #a0aec0;
 }
 
 .hero-buttons {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 20px;
+}
+
+.hero-visual {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero-visual img {
+    width: 100%;
+    max-width: 560px;
+    height: auto;
+    object-fit: contain;
 }
 
 .hero-partners {
     margin-top: 55px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.hero-partners-grid {
-    display: grid;
-    grid-template-columns: repeat(6, minmax(150px, 1fr));
-    gap: 14px;
-}
-
-.partner-chip {
+.hero-bank-strip {
     background: rgba(255, 255, 255, 0.95);
-    color: var(--secondary);
     border-radius: 10px;
-    padding: 14px 10px;
-    font-size: 0.92rem;
-    font-weight: 700;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 8px;
+    width: 100%;
+}
+
+.hero-bank-strip img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    display: block;
 }
 
 .hero-partners-title {
-    margin-top: 14px;
-    font-size: 2rem;
+    font-size: 2.1rem;
     font-weight: 700;
     color: var(--white);
+    margin: 14px 0 0;
+    text-align: center;
 }
 
 .mega-dropdown {
@@ -1397,22 +1421,39 @@ a.footer-link-text {
         width: 100%;
     }
 
+    .hero-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-visual {
+        justify-content: center;
+    }
+
+    .hero-visual img {
+        max-width: 360px;
+    }
+
     .hero-partners {
         margin-top: 35px;
     }
 
-    .hero-partners-grid {
-        grid-template-columns: repeat(2, minmax(120px, 1fr));
-        gap: 10px;
-    }
-
-    .partner-chip {
-        font-size: 0.85rem;
-        padding: 12px 8px;
+    .hero-bank-strip {
+        padding: 6px;
     }
 
     .hero-partners-title {
         font-size: 1.35rem;
+        text-align: center;
     }
 
     /* Premium smaller buttons layout */
